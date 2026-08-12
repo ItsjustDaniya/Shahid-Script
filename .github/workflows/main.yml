@@ -30,10 +30,9 @@ jobs:
 
       - name: Execute Actions.py
         env:
-          ASHRITHA_SECRET_KEY: ${{ secrets.ASHRITHA_SECRET_KEY }}
+          env:
+          METABASE_API_KEY: ${{ secrets.METABASE_API_KEY }}
           SERVICE_ACCOUNT_JSON: ${{ secrets.SERVICE_ACCOUNT_JSON }}
-          USERNAME: ${{ secrets.USERNAME }}
-          METABASE_URL: ${{ secrets.METABASE_URL }}
 
         run: |
           echo "=============================="
