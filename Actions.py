@@ -16,14 +16,12 @@ from concurrent.futures import ThreadPoolExecutor
 start_time = time.time()
 
 # -------------------- ENV & AUTH --------------------
-sec = os.getenv("ASHRITHA_SECRET_KEY")
-User_name = os.getenv("USERNAME")
+METABASE_API_KEY = os.getenv("METABASE_API_KEY")
 service_account_json = os.getenv("SERVICE_ACCOUNT_JSON")
-MB_URL = os.getenv("METABASE_URL")
-SHEET_KEY = "1doVV9vUf40AvASOteCKZhUHvIld1lpcM4AmprCMF7mw"
 
-if not sec or not service_account_json:
+if not METABASE_API_KEY or not service_account_json:
     raise ValueError("❌ Missing environment variables. Check GitHub secrets.")
+
 
 # -------------------- GOOGLE AUTH --------------------
 service_info = json.loads(service_account_json)
@@ -37,19 +35,10 @@ creds = Credentials.from_service_account_info(
 gc = gspread.authorize(creds)
 
 # -------------------- METABASE AUTH --------------------
-res = requests.post(
-    MB_URL,
-    headers={"Content-Type": "application/json"},
-    json={"username": User_name, "password": sec}
-)
-res.raise_for_status()
-token = res.json()['id']
 METABASE_HEADERS = {
     'Content-Type': 'application/json',
-    'X-Metabase-Session': token
+    'x-api-key': METABASE_API_KEY
 }
-print("✅ Metabase session created")
-
 # -------------------- UTILITIES --------------------
 def mb_post(card_url, params=None):
     """POST to a Metabase card URL and return the response."""
