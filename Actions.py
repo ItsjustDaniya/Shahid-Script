@@ -21,7 +21,7 @@ service_account_json = os.getenv("SERVICE_ACCOUNT_JSON")
 
 if not METABASE_API_KEY or not service_account_json:
     raise ValueError("❌ Missing environment variables. Check GitHub secrets.")
-
+SHEET_KEY = "1doVV9vUf40AvASOteCKZhUHvIld1lpcM4AmprCMF7mw"
 
 # -------------------- GOOGLE AUTH --------------------
 service_info = json.loads(service_account_json)
